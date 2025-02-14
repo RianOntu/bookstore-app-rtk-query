@@ -1,7 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./Header";
 
 function AddBook() {
+  const [formData, setFormData] = useState({
+    name: "",
+    author: "",
+    thumbnail: "",
+    price: "",
+    rating: "",
+    featured: false,
+  });
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    setFormData({
+      name: "",
+      author: "",
+      thumbnail: "",
+      price: "",
+      rating: "",
+      featured: false,
+    });
+  };
   return (
     <div>
       <Header />
@@ -10,81 +37,92 @@ function AddBook() {
         <div class="container">
           <div class="p-8 overflow-hidden bg-white shadow-cardShadow rounded-md max-w-xl mx-auto">
             <h4 class="mb-8 text-xl font-bold text-center">Add New Book</h4>
-            <form class="book-form">
-              <div class="space-y-2">
-                <label for="lws-bookName">Book Name</label>
+            <form className="book-form" onSubmit={handleSubmit}>
+              <div className="space-y-2">
+                <label htmlFor="name">Book Name</label>
                 <input
                   required
-                  class="text-input"
+                  className="text-input"
                   type="text"
-                  id="lws-bookName"
+                  id="input-Bookname"
                   name="name"
+                  value={formData.name}
+                  onChange={handleChange}
                 />
               </div>
 
-              <div class="space-y-2">
-                <label for="lws-author">Author</label>
+              <div className="space-y-2">
+                <label htmlFor="author">Author</label>
                 <input
                   required
-                  class="text-input"
+                  className="text-input"
                   type="text"
-                  id="lws-author"
+                  id="input-Bookauthor"
                   name="author"
+                  value={formData.author}
+                  onChange={handleChange}
                 />
               </div>
 
-              <div class="space-y-2">
-                <label for="lws-thumbnail">Image Url</label>
+              <div className="space-y-2">
+                <label htmlFor="thumbnail">Image Url</label>
                 <input
                   required
-                  class="text-input"
+                  className="text-input"
                   type="text"
-                  id="lws-thumbnail"
+                  id="input-Bookthumbnail"
                   name="thumbnail"
+                  value={formData.thumbnail}
+                  onChange={handleChange}
                 />
               </div>
 
-              <div class="grid grid-cols-2 gap-8 pb-4">
-                <div class="space-y-2">
-                  <label for="lws-price">Price</label>
+              <div className="grid grid-cols-2 gap-8 pb-4">
+                <div className="space-y-2">
+                  <label htmlFor="price">Price</label>
                   <input
                     required
-                    class="text-input"
+                    className="text-input"
                     type="number"
-                    id="lws-price"
+                    id="input-Bookprice"
                     name="price"
+                    value={formData.price}
+                    onChange={handleChange}
                   />
                 </div>
 
-                <div class="space-y-2">
-                  <label for="lws-rating">Rating</label>
+                <div className="space-y-2">
+                  <label htmlFor="rating">Rating</label>
                   <input
                     required
-                    class="text-input"
+                    className="text-input"
                     type="number"
-                    id="lws-rating"
+                    id="input-Bookrating"
                     name="rating"
+                    value={formData.rating}
                     min="1"
                     max="5"
+                    onChange={handleChange}
                   />
                 </div>
               </div>
 
-              <div class="flex items-center">
+              <div className="flex items-center">
                 <input
-                  id="lws-featured"
+                  id="input-Bookfeatured"
                   type="checkbox"
                   name="featured"
-                  class="w-4 h-4"
+                  className="w-4 h-4"
+                  checked={formData.featured}
+                  onChange={handleChange}
                 />
-                <label for="lws-featured" class="ml-2 text-sm">
-                  {" "}
-                  This is a featured book{" "}
+                <label htmlFor="featured" className="ml-2 text-sm">
+                  This is a featured book
                 </label>
               </div>
 
-              <button type="submit" class="submit" id="lws-submit">
-                Add Book
+              <button type="submit" className="submit" id="submit">
+                {editMode ? "Update Book" : "Add Book"}
               </button>
             </form>
           </div>
