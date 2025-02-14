@@ -5,6 +5,7 @@ import BookList from "./components/BookList.jsx";
 import AddBook from "./components/AddBook.jsx";
 import { Provider } from "react-redux";
 import { store } from "./store/store.js";
+import EditBook from "./components/EditBook.jsx";
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
   {
     path: "/add-book",
     element: <AddBook />,
+  },
+  {
+    path: "/books/:bookId",
+    element: <EditBook />,
   },
 ]);
 

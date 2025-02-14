@@ -1,11 +1,14 @@
 import React from "react";
 import Header from "./Header";
-import { useGetBooksQuery } from "../features/apiSlice";
+import { useDeleteBookMutation, useGetBooksQuery } from "../features/apiSlice";
+import { Link } from "react-router-dom";
 
 function BookList() {
   const { data: Books } = useGetBooksQuery();
- 
-
+  const [deleteBook] = useDeleteBookMutation();
+  const handleDelete = (id) => {
+    deleteBook(id);
+  };
   return (
     <div>
       <Header />
@@ -26,13 +29,13 @@ function BookList() {
                 <img
                   class="h-[240px] w-[170px] object-cover"
                   src={book.thumbnail}
-                  alt={book.title}
+                  alt={book.name}
                 />
                 <div class="flex-1 h-full pr-2 pt-2 flex flex-col">
                   <div class="flex items-center justify-between">
                     <span class="lws-badge">featured</span>
-                    <div class="text-gray-500 space-x-2">
-                      <button class="lws-edit ">
+                    <div class="text-gray-500 space-x-2 flex">
+                      <Link class="lws-edit " to={`/books/${book.id}`}>
                         <svg
                           fill="none"
                           viewBox="0 0 24 24"
@@ -46,8 +49,11 @@ function BookList() {
                             d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
                           />
                         </svg>
-                      </button>
-                      <button class="lws-deleteBook">
+                      </Link>
+                      <button
+                        class="lws-deleteBook"
+                        onClick={() => handleDelete(book.id)}
+                      >
                         <svg
                           fill="none"
                           viewBox="0 0 24 24"
@@ -66,7 +72,7 @@ function BookList() {
                   </div>
 
                   <div class="space-y-2 mt-4 h-full">
-                    <h4 class="lws-book-name">{book.title}</h4>
+                    <h4 class="lws-book-name">{book.name}</h4>
                     <p class="lws-author">{book.author}</p>
                     <div class="lws-stars">
                       <svg viewBox="0 0 20 20" fill="currentColor" class="star">

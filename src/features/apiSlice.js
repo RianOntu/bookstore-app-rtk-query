@@ -19,7 +19,31 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ["Books"],
     }),
+    getBook: builder.query({
+      query: (bookId) => `/books/${bookId}`,
+    }),
+    updateBook: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/books/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["Books"],
+    }),
+    deleteBook: builder.mutation({
+      query: (id) => ({
+        url: `/books/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Books"],
+    }),
   }),
 });
 
-export const { useGetBooksQuery, useAddBookMutation } = apiSlice;
+export const {
+  useGetBooksQuery,
+  useAddBookMutation,
+  useGetBookQuery,
+  useUpdateBookMutation,
+  useDeleteBookMutation,
+} = apiSlice;
