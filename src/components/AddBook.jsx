@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import Header from "./Header";
+import { useAddBookMutation } from "../features/apiSlice";
+import { useNavigate } from "react-router-dom";
 
 function AddBook() {
+  const [addBook] = useAddBookMutation();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     author: "",
@@ -19,7 +23,7 @@ function AddBook() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    addBook(formData);
     setFormData({
       name: "",
       author: "",
@@ -28,6 +32,7 @@ function AddBook() {
       rating: "",
       featured: false,
     });
+    navigate("/");
   };
   return (
     <div>
@@ -122,7 +127,7 @@ function AddBook() {
               </div>
 
               <button type="submit" className="submit" id="submit">
-                {editMode ? "Update Book" : "Add Book"}
+                Add Book
               </button>
             </form>
           </div>
